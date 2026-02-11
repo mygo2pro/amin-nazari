@@ -9,19 +9,40 @@
   <div id="images"></div>
 
   <script>
-    // CONFIG: set your username, repo, and folder name
     const username = "mygo2pro";
     const repo = "amin-nazari";
 
     const container = document.getElementById("images");
 
-    fetch(`https://api.github.com/repos/${username}/${repo}/contents/)
+    fetch(`https://api.github.com/repos/${username}/${repo}/contents/`)
       .then(res => res.json())
       .then(files => {
-        if (!Array.isArray(files)) {
+        if (!Array.isArray(files) || files.length === 0) {
           container.innerHTML = "<p>No images found in this folder.</p>";
           return;
-        } };
+        }
+
+        // Filter only image files
+        const images = files.filter(file => /\.(png|jpe?g|gif|webp|svg)$/i.test(file.name));
+
+        if (images.length === 0) {
+          container.innerHTML = "<p>No images found in this folder.</p>";
+          return;
+        }
+
+        // Display each image
+        images.forEach(file => {
+          const img = document.createElement("img");
+          img.src = file.download_url; // URL to raw file
+          img.alt = file.name;
+          img.style.maxWidth = "200px";
+          img.style.margin = "10px";
+          container.appendChild(img);
+        });
+      })
+      .catch(err => {
+        container.innerHTML = `<p>Error loading images: ${err.message}</p>`;
+      });
   </script>
 </body>
 </html>
