@@ -19,11 +19,10 @@
     // CONFIG: set your username, repo, and folder name
     const username = "mygo2pro";
     const repo = "amin-nazari";
-    const folder = "images"; // <-- change if your images are in a different folder
 
     const container = document.getElementById("images");
 
-    fetch(`https://api.github.com/repos/${username}/${repo}/contents/${folder}`)
+    fetch(`https://api.github.com/repos/${username}/${repo}/contents/)
       .then(res => res.json())
       .then(files => {
         if (!Array.isArray(files)) {
