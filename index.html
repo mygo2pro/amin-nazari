@@ -29,38 +29,7 @@
         if (!Array.isArray(files)) {
           container.innerHTML = "<p>No images found in this folder.</p>";
           return;
-        }
-
-        files
-          .filter(f => f.type === "file")
-          .forEach(f => {
-            const div = document.createElement("div");
-            div.className = "image-container";
-
-            const img = document.createElement("img");
-            img.src = f.download_url;
-
-            const code = document.createElement("code");
-            code.textContent = f.download_url;
-
-            const btn = document.createElement("button");
-            btn.textContent = "Copy URL";
-            btn.onclick = () => {
-              navigator.clipboard.writeText(f.download_url);
-              btn.textContent = "Copied!";
-              setTimeout(() => btn.textContent = "Copy URL", 1000);
-            };
-
-            div.appendChild(img);
-            div.appendChild(code);
-            div.appendChild(btn);
-            container.appendChild(div);
-          });
-      })
-      .catch(err => {
-        container.innerHTML = "<p>Error fetching images. Make sure the folder exists and is public.</p>";
-        console.error(err);
-      });
+        } };
   </script>
 </body>
 </html>
